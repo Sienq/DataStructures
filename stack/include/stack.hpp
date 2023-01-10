@@ -7,6 +7,11 @@ struct node
     node* next;
 };
 
+template<typename T>
+bool operator==(const node<T>& lhs, const node<T>& rhs)
+{
+    return lhs->value == rhs->value;
+}
 
 template <typename T>
 class stack
@@ -16,6 +21,7 @@ class stack
     public:
     stack();
     stack(T);
+    ~stack();
     void push(T);
     void pop();
     bool empty() const;
@@ -28,6 +34,23 @@ stack<T>::stack()
 {
     std::cout<<"ELO";
     topNode = new node<T>;
+}
+
+template<typename T>
+stack<T>::~stack()
+{
+    node<T>* nextToDelete;
+    while(topNode)
+    {
+        std::cout<<"Address: "<<topNode<<" VALUE: "<<topNode->value<<std::endl;
+        nextToDelete = new node<T>;
+        nextToDelete = topNode;
+        topNode= topNode->next;
+        delete nextToDelete;
+    }
+    std::cout<<"Address: "<<topNode<<" VALUE: "<<topNode->value;
+    delete topNode;
+    topNode = nullptr;
 }
 
 template<typename T>
